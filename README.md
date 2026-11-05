@@ -9,6 +9,12 @@ PropMan is a property inspection and condition reporting project. The planned wo
 
 During development, Vite forwards requests under `/api` to Laravel at `http://127.0.0.1:8000`. This lets React use relative URLs and keeps local browser requests on a single origin.
 
+## Working in VS Code
+
+Choose **File → Open Folder…** and open the repository root so the Explorer shows both `backend/` and `frontend/`. Use two integrated terminals for the Laravel and Vite commands below.
+
+If a terminal on an Apple Silicon Mac cannot find the tools, run `export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"` in that terminal.
+
 ## Local setup
 
 Use PHP 8.3+ with `pdo_mysql`, Composer, MySQL 8.4 and Node.js 22.12+ or 24 with npm. On an Apple Silicon Mac with Homebrew, install the backend tools and start MySQL:
