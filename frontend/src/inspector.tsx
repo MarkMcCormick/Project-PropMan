@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react'
-
+import Findings from './findings.tsx'
 
 function App() {
 const [properties, setProperties] = useState<{ id: number; property_name: string }[]>([])
+const [activeInspection, setActiveInspection] = useState<{
+  
+  id: number
+  propertyName: string
+} | null>(null)
   const [status, setStatus] = useState('Checking the Laravel API…')
 
   useEffect(() => {
@@ -45,6 +50,16 @@ const [properties, setProperties] = useState<{ id: number; property_name: string
   
     loadProperties()
   }, [])
+
+
+  if (activeInspection) {
+    return (
+      <Findings
+        id={activeInspection.id}
+        propertyName={activeInspection.propertyName}
+      />
+    )
+  }
   return (
     <main>
       <h1>PropMan</h1>
@@ -69,8 +84,17 @@ const [properties, setProperties] = useState<{ id: number; property_name: string
           return
         }
 
-        console.log('Saved inspector:', await response.json())
-        form.reset()
+        const inspection = await response.json()
+        const property = properties.find(
+          (property) => property.id === Number(inspection.property_id)
+        )
+        
+        if (property) {
+          setActiveInspection({
+            id: inspection.id,
+            propertyName: property.property_name,
+          })
+        }        form.reset()
       }}>
       <label htmlFor="inspector-name">Inspector name</label>
       <input id="inspector-name" name="inspector_name" type="text" required />
